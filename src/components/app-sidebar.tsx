@@ -134,21 +134,21 @@ export function AppSidebar() {
                   <SidebarMenuSub>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-in" className="flex items-center gap-2">
+                        <a href="/clerk/sign-in" className="flex items-center gap-2">
                           Sign In
                         </a>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-up" className="flex items-center gap-2">
+                        <a href="/clerk/sign-up" className="flex items-center gap-2">
                           Sign Up
                         </a>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/user-management" className="flex items-center gap-2">
+                        <a href="/clerk/user-management" className="flex items-center gap-2">
                           User Management
                         </a>
                       </SidebarMenuSubButton>
