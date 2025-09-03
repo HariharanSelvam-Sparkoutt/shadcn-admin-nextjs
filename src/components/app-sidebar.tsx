@@ -1,4 +1,5 @@
 "use client"
+import { ClerkLogo } from "@/assets/clerk-logo"
 import {
   Sidebar,
   SidebarContent,
@@ -123,7 +124,7 @@ export function AppSidebar() {
                   className="flex items-center justify-between"
                 >
                   <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4" />
+                    <ClerkLogo />
                     Secured by Clerk
                   </div>
                   <ChevronDown 
@@ -239,7 +240,7 @@ export function AppSidebar() {
                   <SidebarMenuSub>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-in" className="flex items-center gap-2">
+                        <a href="/errors/unauthorized-error" className="flex items-center gap-2">
                         <Lock className="h-4 w-4" />
                          Unauthorized
                         </a>
@@ -247,7 +248,7 @@ export function AppSidebar() {
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-in-2" className="flex items-center gap-2">
+                        <a href="/errors/forbidden" className="flex items-center gap-2">
                         <UserX className="h-4 w-4" />
                          Forbidden
                         </a>
@@ -255,7 +256,7 @@ export function AppSidebar() {
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-up" className="flex items-center gap-2">
+                        <a href="/errors/not-found-error" className="flex items-center gap-2">
                         <FileX className="h-4 w-4" />
                           Not Found
                         </a>
@@ -263,7 +264,7 @@ export function AppSidebar() {
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/forgot-password" className="flex items-center gap-2">
+                        <a href="/errors/general-error" className="flex items-center gap-2">
                         <ServerOff className="h-4 w-4" />
                           Internal Server Error
                         </a>
@@ -271,7 +272,7 @@ export function AppSidebar() {
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/otp" className="flex items-center gap-2">
+                        <a href="/errors/maintenance" className="flex items-center gap-2">
                         <Construction className="h-4 w-4" />
                           Maintenance Error
                         </a>
@@ -307,7 +308,7 @@ export function AppSidebar() {
                   <SidebarMenuSub>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-in" className="flex items-center gap-2">
+                        <a href="/settings" className="flex items-center gap-2">
                         <UserRoundCog className="h-4 w-4" />
                          Profile
                         </a>
@@ -315,7 +316,7 @@ export function AppSidebar() {
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-in-2" className="flex items-center gap-2">
+                        <a href="/settings/account" className="flex items-center gap-2">
                         <Wrench className="h-4 w-4" />
                          Account
                         </a>
@@ -323,15 +324,15 @@ export function AppSidebar() {
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-up" className="flex items-center gap-2">
+                        <a href="/settings/appearance" className="flex items-center gap-2">
                         <Palette className="h-4 w-4" />
-                          Appearence
+                          Appearance
                         </a>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/forgot-password" className="flex items-center gap-2">
+                        <a href="/settings/notifications" className="flex items-center gap-2">
                         <Bell className="h-4 w-4" />
                           Notifications
                         </a>
@@ -339,7 +340,7 @@ export function AppSidebar() {
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/otp" className="flex items-center gap-2">
+                        <a href="/settings/display" className="flex items-center gap-2">
                         <Monitor className="h-4 w-4" />
                           Display
                         </a>
@@ -351,7 +352,7 @@ export function AppSidebar() {
 
                <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/tasks" className="flex items-center gap-2">
+                  <a href="/help-center" className="flex items-center gap-2">
                     <CircleQuestionMark className="h-4 w-4" />
                     Help Center
                   </a>

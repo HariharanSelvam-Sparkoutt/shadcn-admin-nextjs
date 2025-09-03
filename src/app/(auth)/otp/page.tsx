@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { OtpForm } from './components/otp-form'
+import OtpForm from './components/otp-form'
 
 export default function Otp() {
   return (

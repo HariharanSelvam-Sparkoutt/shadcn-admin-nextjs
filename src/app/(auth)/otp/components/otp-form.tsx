@@ -21,8 +21,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
   InputOTPSeparator,
-} from "@/components/ui/input-otp"
-
+} from "../../../../components/ui/input-otp"
 const formSchema = z.object({
   otp: z
     .string()
