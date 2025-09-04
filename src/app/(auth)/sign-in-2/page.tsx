@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import ViteLogo from '../../../assets/vite.svg'
 import { UserAuthForm } from '@/features/auth/sign-in/components/user-auth-form'
 
@@ -53,19 +54,19 @@ export default function SignIn2() {
           <UserAuthForm />
           <p className='text-muted-foreground px-8 text-center text-sm'>
             By clicking sign in, you agree to our{' '}
-            <a
+            <Link
               href='/terms'
               className='hover:text-primary underline underline-offset-4'
             >
               Terms of Service
-            </a>{' '}
+            </Link>{' '}
             and{' '}
-            <a
+            <Link
               href='/privacy'
               className='hover:text-primary underline underline-offset-4'
             >
               Privacy Policy
-            </a>
+            </Link>
             .
           </p>
         </div>

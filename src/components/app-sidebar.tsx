@@ -50,8 +50,11 @@ import {
   Bell,
   Monitor,
   CircleQuestionMark,
+  ChevronsUpDown,
 } from "lucide-react"
 import { useState } from "react"
+import Link from "next/link"
+import { HeaderTeamSelector } from "./ui/header-user-selector"
 
 export function AppSidebar() {
   const [isClerkOpen, setIsClerkOpen] = useState(false)
@@ -61,15 +64,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="border-b p-4">
-        <div className="flex items-center gap-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground font-bold text-sm">
-            S
-          </div>
-          <div>
-            <h1 className="font-semibold">Shaden Admin</h1>
-            <p className="text-xs text-muted-foreground">NextJs + ShadcnUI</p>
-          </div>
-        </div>
+       <HeaderTeamSelector />
       </SidebarHeader>
       
       <SidebarContent>
@@ -80,42 +75,42 @@ export function AppSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/" className="flex items-center gap-2">
+                  <Link href="/" className="flex items-center gap-2">
                     <LayoutDashboard className="h-4 w-4" />
                     Dashboard
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
                <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/tasks" className="flex items-center gap-2">
+                  <Link href="/tasks" className="flex items-center gap-2">
                     <ListTodo className="h-4 w-4" />
                     Tasks
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
                <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/apps" className="flex items-center gap-2">
+                  <Link href="/apps" className="flex items-center gap-2">
                     <Package className="h-4 w-4" />
                     Apps
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
                <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/chats" className="flex items-center gap-2">
+                  <Link href="/chats" className="flex items-center gap-2">
                     <MessagesSquare className="h-4 w-4" />
                     Chats
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
                <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/users" className="flex items-center gap-2">
+                  <Link href="/users" className="flex items-center gap-2">
                     <Users className="h-4 w-4" />
                     Users
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -135,23 +130,23 @@ export function AppSidebar() {
                   <SidebarMenuSub>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/clerk/sign-in" className="flex items-center gap-2">
+                        <Link href="/clerk/sign-in" className="flex items-center gap-2">
                           Sign In
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/clerk/sign-up" className="flex items-center gap-2">
+                        <Link href="/clerk/sign-up" className="flex items-center gap-2">
                           Sign Up
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/clerk/user-management" className="flex items-center gap-2">
+                        <Link href="/clerk/user-management" className="flex items-center gap-2">
                           User Management
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
@@ -184,37 +179,37 @@ export function AppSidebar() {
                   <SidebarMenuSub>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-in" className="flex items-center gap-2">
+                        <Link href="/sign-in" className="flex items-center gap-2">
                           Sign In
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-in-2" className="flex items-center gap-2">
+                        <Link href="/sign-in-2" className="flex items-center gap-2">
                           Sign In (2 Col)
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/sign-up" className="flex items-center gap-2">
+                        <Link href="/sign-up" className="flex items-center gap-2">
                           Sign Up
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/forgot-password" className="flex items-center gap-2">
+                        <Link href="/forgot-password" className="flex items-center gap-2">
                           Forgot Password
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/otp" className="flex items-center gap-2">
+                        <Link href="/otp" className="flex items-center gap-2">
                           OTP
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
@@ -240,42 +235,42 @@ export function AppSidebar() {
                   <SidebarMenuSub>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/errors/unauthorized-error" className="flex items-center gap-2">
+                        <Link href="/errors/unauthorized-error" className="flex items-center gap-2">
                         <Lock className="h-4 w-4" />
                          Unauthorized
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/errors/forbidden" className="flex items-center gap-2">
+                        <Link href="/errors/forbidden" className="flex items-center gap-2">
                         <UserX className="h-4 w-4" />
                          Forbidden
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/errors/not-found-error" className="flex items-center gap-2">
+                        <Link href="/errors/not-found-error" className="flex items-center gap-2">
                         <FileX className="h-4 w-4" />
                           Not Found
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/errors/general-error" className="flex items-center gap-2">
+                        <Link href="/errors/general-error" className="flex items-center gap-2">
                         <ServerOff className="h-4 w-4" />
                           Internal Server Error
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/errors/maintenance" className="flex items-center gap-2">
+                        <Link href="/errors/maintenance" className="flex items-center gap-2">
                         <Construction className="h-4 w-4" />
                           Maintenance Error
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
@@ -308,42 +303,42 @@ export function AppSidebar() {
                   <SidebarMenuSub>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/settings" className="flex items-center gap-2">
+                        <Link href="/settings" className="flex items-center gap-2">
                         <UserRoundCog className="h-4 w-4" />
                          Profile
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/settings/account" className="flex items-center gap-2">
+                        <Link href="/settings/account" className="flex items-center gap-2">
                         <Wrench className="h-4 w-4" />
                          Account
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/settings/appearance" className="flex items-center gap-2">
+                        <Link href="/settings/appearance" className="flex items-center gap-2">
                         <Palette className="h-4 w-4" />
                           Appearance
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/settings/notifications" className="flex items-center gap-2">
+                        <Link href="/settings/notifications" className="flex items-center gap-2">
                         <Bell className="h-4 w-4" />
                           Notifications
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/settings/display" className="flex items-center gap-2">
+                        <Link href="/settings/display" className="flex items-center gap-2">
                         <Monitor className="h-4 w-4" />
                           Display
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
@@ -352,10 +347,10 @@ export function AppSidebar() {
 
                <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/help-center" className="flex items-center gap-2">
+                  <Link href="/help-center" className="flex items-center gap-2">
                     <CircleQuestionMark className="h-4 w-4" />
                     Help Center
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               

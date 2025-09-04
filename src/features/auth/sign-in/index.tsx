@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/card'
 import { AuthLayout } from '../auth-layout'
 import { UserAuthForm } from './components/user-auth-form'
+import Link from 'next/link'
 
 export function SignIn() {
   const searchParams = useSearchParams()
@@ -32,19 +33,19 @@ export function SignIn() {
         <CardFooter>
           <p className="text-muted-foreground px-8 text-center text-sm">
             By clicking sign in, you agree to our{' '}
-            <a
+            <Link
               href="/terms"
               className="hover:text-primary underline underline-offset-4"
             >
               Terms of Service
-            </a>{' '}
+            </Link>{' '}
             and{' '}
-            <a
+            <Link
               href="/privacy"
               className="hover:text-primary underline underline-offset-4"
             >
               Privacy Policy
-            </a>
+            </Link>
             .
           </p>
         </CardFooter>

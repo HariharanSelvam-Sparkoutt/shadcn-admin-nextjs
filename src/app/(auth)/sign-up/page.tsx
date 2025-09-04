@@ -35,19 +35,19 @@ export default function SignUp() {
         <CardFooter>
           <p className='text-muted-foreground px-8 text-center text-sm'>
             By creating an account, you agree to our{' '}
-            <a
+            <Link
               href='/terms'
               className='hover:text-primary underline underline-offset-4'
             >
               Terms of Service
-            </a>{' '}
+            </Link>{' '}
             and{' '}
-            <a
+            <Link
               href='/privacy'
               className='hover:text-primary underline underline-offset-4'
             >
               Privacy Policy
-            </a>
+            </Link>
             .
           </p>
         </CardFooter>
