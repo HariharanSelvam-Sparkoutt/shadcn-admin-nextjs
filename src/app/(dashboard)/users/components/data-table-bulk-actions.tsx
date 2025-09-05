@@ -39,7 +39,6 @@ export function DataTableBulkActions<TData>({
         status === "active" ? "activating" : "deactivating"
       } users`,
     });
-    table.resetRowSelection();
   };
 
   const handleBulkInvite = () => {
@@ -54,7 +53,6 @@ export function DataTableBulkActions<TData>({
       },
       error: "Error inviting users",
     });
-    table.resetRowSelection();
   };
 
   return (
@@ -69,6 +67,7 @@ export function DataTableBulkActions<TData>({
               className="size-8"
               aria-label="Invite selected users"
               title="Invite selected users"
+              disabled={selectedRows.length === 0}
             >
               <Mail />
               <span className="sr-only">Invite selected users</span>
@@ -88,6 +87,7 @@ export function DataTableBulkActions<TData>({
               className="size-8"
               aria-label="Activate selected users"
               title="Activate selected users"
+              disabled={selectedRows.length === 0}
             >
               <UserCheck />
               <span className="sr-only">Activate selected users</span>
@@ -107,6 +107,7 @@ export function DataTableBulkActions<TData>({
               className="size-8"
               aria-label="Deactivate selected users"
               title="Deactivate selected users"
+              disabled={selectedRows.length === 0}
             >
               <UserX />
               <span className="sr-only">Deactivate selected users</span>
@@ -126,6 +127,7 @@ export function DataTableBulkActions<TData>({
               className="size-8"
               aria-label="Delete selected users"
               title="Delete selected users"
+              disabled={selectedRows.length === 0}
             >
               <Trash2 />
               <span className="sr-only">Delete selected users</span>
@@ -143,5 +145,5 @@ export function DataTableBulkActions<TData>({
         onOpenChange={setShowDeleteConfirm}
       />
     </>
-  );
+  )
 }

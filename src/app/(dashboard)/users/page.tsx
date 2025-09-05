@@ -1,30 +1,61 @@
-'use client'
+"use client";
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
-import { UsersDialogs } from './components/users-dialogs'
-import { UsersPrimaryButtons } from './components/users-primary-buttons'
-import { UsersProvider } from '@/app/(dashboard)/users/components/users-provider'
-import { UsersTable } from '@/app/(dashboard)/users/components/users-table'
-import { users } from '@/app/(dashboard)/users/data/users'
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ConfigDrawer } from "@/components/config-drawer";
+import { Header } from "@/components/layout/header";
+import { Main } from "@/components/layout/main";
+import { ProfileDropdown } from "@/components/profile-dropdown";
+import { Search } from "@/components/search";
+import { ThemeSwitch } from "@/components/theme-switch";
+import { UsersDialogs } from "./components/users-dialogs";
+import { UsersPrimaryButtons } from "./components/users-primary-buttons";
+import { UsersProvider } from "@/app/(dashboard)/users/components/users-provider";
+import { UsersTable } from "@/app/(dashboard)/users/components/users-table";
+import { users } from "@/app/(dashboard)/users/data/users";
+import { type NavigateFn } from "@/hooks/use-table-url-state";
 
 export default function UsersPage() {
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  // Instead of TanStack search, we can turn searchParams into an object
-  const search = Object.fromEntries(searchParams.entries())
+  const search = Object.fromEntries(searchParams.entries());
 
-  // Instead of route.navigate(), we use Next.js router.push
-  const navigate = (path: string) => {
-    router.push(path)
-  }
+  const navigate: NavigateFn = (opts) => {
+    let newSearch: Record<string, string>;
+
+    if (opts.search === true) {
+      newSearch = {};
+    } else if (typeof opts.search === "function") {
+      const result = opts.search(search);
+      newSearch = Object.fromEntries(
+        Object.entries(result).map(([key, value]) => [
+          key,
+          value === null || value === undefined ? "" : String(value),
+        ])
+      );
+    } else {
+      newSearch = Object.fromEntries(
+        Object.entries(opts.search).map(([key, value]) => [
+          key,
+          value === null || value === undefined ? "" : String(value),
+        ])
+      );
+    }
+
+    const filteredSearch = Object.fromEntries(
+      Object.entries(newSearch).filter(([_, value]) => value !== "")
+    );
+
+    const query = new URLSearchParams(filteredSearch).toString();
+    const url = `${pathname}${query ? `?${query}` : ""}`;
+
+    if (opts.replace) {
+      router.replace(url);
+    } else {
+      router.push(url);
+    }
+  };
 
   return (
     <UsersProvider>
@@ -49,11 +80,11 @@ export default function UsersPage() {
         </div>
 
         <div className="-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-y-0 lg:space-x-12">
-          {/* <UsersTable data={users} search={search} navigate={navigate} /> */}
+          <UsersTable data={users} search={search} navigate={navigate} />
         </div>
       </Main>
 
       <UsersDialogs />
     </UsersProvider>
-  )
+  );
 }

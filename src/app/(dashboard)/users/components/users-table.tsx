@@ -29,7 +29,6 @@ import { DataTableBulkActions } from './data-table-bulk-actions'
 import { usersColumns as columns } from './users-columns'
 
 declare module '@tanstack/react-table' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData, TValue> {
     className: string
   }
@@ -37,21 +36,15 @@ declare module '@tanstack/react-table' {
 
 type DataTableProps = {
   data: User[]
-  search: Record<string, unknown>
+  search: Record<string, string>
   navigate: NavigateFn
 }
 
 export function UsersTable({ data, search, navigate }: DataTableProps) {
-  // Local UI-only states
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [sorting, setSorting] = useState<SortingState>([])
 
-  // Local state management for table (uncomment to use local-only state, not synced with URL)
-  // const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([])
-  // const [pagination, onPaginationChange] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
-
-  // Synced with URL states (keys/defaults mirror users route search schema)
   const {
     columnFilters,
     onColumnFiltersChange,
@@ -61,10 +54,9 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
   } = useTableUrlState({
     search,
     navigate,
-    pagination: { defaultPage: 1, defaultPageSize: 10 },
+    pagination: { defaultPage: 0, defaultPageSize: 10 },
     globalFilter: { enabled: false },
     columnFilters: [
-      // username per-column text filter
       { columnId: 'username', searchKey: 'username', type: 'string' },
       { columnId: 'status', searchKey: 'status', type: 'array' },
       { columnId: 'role', searchKey: 'role', type: 'array' },
@@ -82,8 +74,12 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
       columnVisibility,
     },
     enableRowSelection: true,
-    onPaginationChange,
-    onColumnFiltersChange,
+    onPaginationChange: (updater) => {
+      onPaginationChange(updater);
+    },
+    onColumnFiltersChange: (updater) => {
+      onColumnFiltersChange(updater);
+    },
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
@@ -95,9 +91,69 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
+  // Sync URL changes to table pagination state
   useEffect(() => {
-    ensurePageInRange(table.getPageCount())
-  }, [table, ensurePageInRange])
+    const pageIndex = search.page ? parseInt(search.page) - 1 : 0;
+    const pageSize = search.pageSize ? parseInt(search.pageSize) : 10;
+    
+    if (table.getState().pagination.pageIndex !== pageIndex || 
+        table.getState().pagination.pageSize !== pageSize) {
+      table.setPagination({
+        pageIndex,
+        pageSize,
+      });
+    }
+  }, [search.page, search.pageSize, table]);
+
+  // Sync URL changes to table filter state
+  useEffect(() => {
+    const newFilters: typeof columnFilters = [];
+    
+    // Sync username filter
+    if (search.username) {
+      newFilters.push({
+        id: 'username',
+        value: search.username,
+      });
+    }
+    
+    // Sync status filter (handle both single and array values)
+    if (search.status) {
+      const statusValues = typeof search.status === 'string' 
+        ? search.status.split(',') 
+        : Array.isArray(search.status) 
+          ? search.status 
+          : [search.status];
+      newFilters.push({
+        id: 'status',
+        value: statusValues,
+      });
+    }
+    
+    // Sync role filter (handle both single and array values)
+    if (search.role) {
+      const roleValues = typeof search.role === 'string' 
+        ? search.role.split(',') 
+        : Array.isArray(search.role) 
+          ? search.role 
+          : [search.role];
+      newFilters.push({
+        id: 'role',
+        value: roleValues,
+      });
+    }
+    
+    // Only update if filters are different
+    const currentFilters = table.getState().columnFilters;
+    if (JSON.stringify(currentFilters) !== JSON.stringify(newFilters)) {
+      table.setColumnFilters(newFilters);
+    }
+  }, [search.username, search.status, search.role, table]);
+
+  // Ensure page is in valid range
+  useEffect(() => {
+    ensurePageInRange(table.getPageCount());
+  }, [table.getPageCount(), ensurePageInRange]);
 
   return (
     <div className='space-y-4 max-sm:has-[div[role="toolbar"]]:mb-16'>
@@ -187,7 +243,7 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} navigate={navigate} />
       <DataTableBulkActions table={table} />
     </div>
   )

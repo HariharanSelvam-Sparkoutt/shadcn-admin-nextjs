@@ -14,39 +14,74 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { NavigateFn } from '@/hooks/use-table-url-state'
+import { useEffect, useState } from 'react'
 
 type DataTablePaginationProps<TData> = {
   table: Table<TData>
+  navigate: NavigateFn
 }
 
 export function DataTablePagination<TData>({
   table,
+  navigate,
 }: DataTablePaginationProps<TData>) {
+  const [currentPageSize, setCurrentPageSize] = useState(table.getState().pagination.pageSize);
   const currentPage = table.getState().pagination.pageIndex + 1
   const totalPages = table.getPageCount()
   const pageNumbers = getPageNumbers(currentPage, totalPages)
 
+  // Sync page size from table state
+  useEffect(() => {
+    setCurrentPageSize(table.getState().pagination.pageSize);
+  }, [table.getState().pagination.pageSize]);
+
+  const handlePageSizeChange = (value: string) => {
+    const pageSize = Number(value);
+    setCurrentPageSize(pageSize);
+    
+    // Update URL
+    navigate({
+      search: (prev) => ({ 
+        ...prev, 
+        pageSize: `${pageSize}`,
+        page: '1' // Reset to first page when changing page size
+      }),
+      replace: true
+    });
+    
+    // Update table state immediately
+    table.setPageSize(pageSize);
+    table.setPageIndex(0);
+  }
+
+  const handlePageChange = (pageNumber: number) => {
+    // Update URL
+    navigate({
+      search: (prev) => ({ ...prev, page: `${pageNumber}` }),
+      replace: true
+    });
+    
+    // Update table state immediately
+    table.setPageIndex(pageNumber - 1);
+  }
+
   return (
-    <div
-      className={cn(
-        'flex items-center justify-between overflow-clip px-2',
-        '@max-2xl/main:flex-col-reverse @max-2xl/main:gap-4'
-      )}
-      style={{ overflowClipMargin: 1 }}
-    >
+    <div className={cn(
+      'flex items-center justify-between overflow-clip px-2',
+      '@max-2xl/main:flex-col-reverse @max-2xl/main:gap-4'
+    )}>
       <div className='flex w-full items-center justify-between'>
         <div className='flex w-[100px] items-center justify-center text-sm font-medium @2xl/main:hidden'>
           Page {currentPage} of {totalPages}
         </div>
         <div className='flex items-center gap-2 @max-2xl/main:flex-row-reverse'>
           <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value))
-            }}
+            value={`${currentPageSize}`}
+            onValueChange={handlePageSizeChange}
           >
             <SelectTrigger className='h-8 w-[70px]'>
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
+              <SelectValue placeholder={currentPageSize} />
             </SelectTrigger>
             <SelectContent side='top'>
               {[10, 20, 30, 40, 50].map((pageSize) => (
@@ -68,23 +103,23 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='size-8 p-0 @max-md/main:hidden'
-            onClick={() => table.setPageIndex(0)}
+            onClick={() => handlePageChange(1)}
             disabled={!table.getCanPreviousPage()}
           >
             <span className='sr-only'>Go to first page</span>
             <DoubleArrowLeftIcon className='h-4 w-4' />
           </Button>
+
           <Button
             variant='outline'
             className='size-8 p-0'
-            onClick={() => table.previousPage()}
+            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
             disabled={!table.getCanPreviousPage()}
           >
             <span className='sr-only'>Go to previous page</span>
             <ChevronLeftIcon className='h-4 w-4' />
           </Button>
 
-          {/* Page number buttons */}
           {pageNumbers.map((pageNumber, index) => (
             <div key={`${pageNumber}-${index}`} className='flex items-center'>
               {pageNumber === '...' ? (
@@ -93,7 +128,7 @@ export function DataTablePagination<TData>({
                 <Button
                   variant={currentPage === pageNumber ? 'default' : 'outline'}
                   className='size-8 p-0'
-                  onClick={() => table.setPageIndex((pageNumber as number) - 1)}
+                  onClick={() => handlePageChange(pageNumber as number)}
                 >
                   <span className='sr-only'>Go to page {pageNumber}</span>
                   {pageNumber}
@@ -105,16 +140,17 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='size-8 p-0'
-            onClick={() => table.nextPage()}
+            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
             disabled={!table.getCanNextPage()}
           >
             <span className='sr-only'>Go to next page</span>
             <ChevronRightIcon className='h-4 w-4' />
           </Button>
+
           <Button
             variant='outline'
             className='size-8 p-0 @max-md/main:hidden'
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            onClick={() => handlePageChange(totalPages)}
             disabled={!table.getCanNextPage()}
           >
             <span className='sr-only'>Go to last page</span>
